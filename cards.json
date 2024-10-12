@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "word": "Synergy",
+    "definition": "Combined effort greater than parts"
+  },
+  {
+    "id": 2,
+    "word": "Leverage",
+    "definition": "Use something to maximum advantage"
+  },
+  {
+    "id": 3,
+    "word": "Paradigm shift",
+    "definition": "Fundamental change in approach"
+  },
+  {
+    "id": 4,
+    "word": "Bandwidth",
+    "definition": "Capacity to handle workload"
+  },
+  {
+    "id": 5,
+    "word": "Touch base",
+    "definition": "Brief communication to update"
+  },
+  {
+    "id": 6,
+    "word": "Low-hanging fruit",
+    "definition": "Easily achievable tasks"
+  },
+  {
+    "id": 7,
+    "word": "Think outside the box",
+    "definition": "Approach problems creatively"
+  },
+  {
+    "id": 8,
+    "word": "Move the needle",
+    "definition": "Make a noticeable difference"
+  },
+  {
+    "id": 9,
+    "word": "Drill down",
+    "definition": "Examine something in detail"
+  },
+  {
+    "id": 10,
+    "word": "Circle back",
+    "definition": "Return to a topic later"
+  },
+  {
+    "id": 11,
+    "word": "Reinvent the wheel",
+    "definition": "Duplicate existing methods unnecessarily"
+  },
+  {
+    "id": 12,
+    "word": "Blue sky thinking",
+    "definition": "Creative ideas without limits"
+  },
+  { "id": 13, "word": "Ping", "definition": "Contact someone briefly" },
+  {
+    "id": 14,
+    "word": "Deep dive",
+    "definition": "Thorough examination of a topic"
+  },
+  {
+    "id": 15,
+    "word": "Bandwidth",
+    "definition": "Available time and resources"
+  },
+  {
+    "id": 16,
+    "word": "Ballpark figure",
+    "definition": "Rough numerical estimate"
+  },
+  {
+    "id": 17,
+    "word": "Game changer",
+    "definition": "Something that alters the status quo"
+  },
+  {
+    "id": 18,
+    "word": "Value add",
+    "definition": "Improvement or addition that creates value"
+  },
+  {
+    "id": 19,
+    "word": "Scalable",
+    "definition": "Able to be easily expanded"
+  },
+  {
+    "id": 20,
+    "word": "Best practice",
+    "definition": "Most effective method or technique"
+  }
+]
