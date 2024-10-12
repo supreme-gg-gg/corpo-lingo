@@ -24,7 +24,6 @@ function createCard(content, type, id) {
   return card;
 }
 
-// Function to populate the game board
 function populateBoard() {
   const wordsRow = document.getElementById("wordsRow");
   const definitionsRow = document.getElementById("definitionsRow");
@@ -32,10 +31,14 @@ function populateBoard() {
   wordsRow.innerHTML = "";
   definitionsRow.innerHTML = "";
 
-  const shuffledCards = shuffle([...cards]);
+  const shuffledWords = shuffle([...cards]);
+  const shuffledDefinitions = shuffle([...cards]);
 
-  shuffledCards.forEach((card) => {
+  shuffledWords.forEach((card) => {
     wordsRow.appendChild(createCard(card.word, "word", card.id));
+  });
+
+  shuffledDefinitions.forEach((card) => {
     definitionsRow.appendChild(
       createCard(card.definition, "definition", card.id)
     );
