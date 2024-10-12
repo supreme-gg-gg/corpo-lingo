@@ -1,0 +1,99 @@
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f0f4f8;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  max-width: 800px;
+  width: 100%;
+}
+
+h1 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.game-area {
+  margin-bottom: 2rem;
+}
+
+.row {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.card {
+  background-color: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: calc(20% - 1rem);
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.selected {
+  background-color: #e0e0e0;
+  border-color: #b0b0b0;
+}
+
+.matched {
+  background-color: #4caf50;
+  color: white;
+  border-color: #45a049;
+}
+
+.wrong {
+  background-color: #f44336;
+  color: white;
+  border-color: #da190b;
+}
+
+#resetButton {
+  display: block;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#resetButton:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 600px) {
+  .card {
+    width: calc(33.33% - 1rem);
+  }
+}
