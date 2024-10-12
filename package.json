@@ -1,0 +1,23 @@
+{
+  "name": "corpo-lingo",
+  "version": "1.0.0",
+  "description": "Power up your corporate vocab skills!",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/supreme-gg-gg/corpo-lingo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/supreme-gg-gg/corpo-lingo/issues"
+  },
+  "homepage": "https://github.com/supreme-gg-gg/corpo-lingo#readme",
+  "keywords": [],
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}
