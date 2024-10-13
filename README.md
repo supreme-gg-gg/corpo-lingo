@@ -26,4 +26,4 @@ Ever felt lost in a sea of corporate jargon? Fear not! This project will turn yo
    node server.js
    ```
 
-Get ready to buzzword your way to the top!
+> Get ready to buzzword your way to the top!
