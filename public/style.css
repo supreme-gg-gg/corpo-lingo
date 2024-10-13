@@ -47,6 +47,13 @@ h1::after {
   border-radius: 2px;
 }
 
+p {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-align: justify;
+}
+
 .game-area {
   margin-bottom: 2rem;
 }
@@ -138,7 +145,8 @@ h1::after {
   }
 }
 
-#resetButton {
+#resetButton,
+#homeButton {
   display: block;
   margin: 0 auto;
   padding: 0.75rem 1.5rem;
@@ -154,7 +162,8 @@ h1::after {
   box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
 }
 
-#resetButton:hover {
+#resetButton:hover,
+#homeButton:hover {
   background-color: #2980b9;
   box-shadow: 0 6px 8px rgba(52, 152, 219, 0.4);
   transform: translateY(-2px);
