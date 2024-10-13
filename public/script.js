@@ -124,16 +124,17 @@ function resetGame() {
 
 // Function to fetch cards from the backend
 function fetchCards() {
-  fetch("/cards")
+  fetch("cards.json")
     .then((response) => response.json())
     .then((data) => {
-      cards = data;
+      cards = shuffle(data).slice(0, 5); // Shuffle all cards and select 5 random ones
       totalPairs = cards.length;
       populateBoard();
       updateProgressBar();
     })
     .catch((error) => {
       console.error("Error fetching cards:", error);
+      alert("Error fetching cards.");
     });
 }
 
