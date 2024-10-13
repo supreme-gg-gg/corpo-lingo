@@ -1,35 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Corporate Lingo Learning Game</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div class="container">
-      <h1>Master Your Corporate Lingo Today!</h1>
-      <p style="text-align: center">
-        Welcome to the ultimate game to enhance your corporate vocabulary
-        skills!
-      </p>
-      <div class="progress-container">
-        <div class="progress-bar" id="progress"></div>
-      </div>
-      <div class="game-area">
-        <div id="wordsRow" class="row">
-          <!-- Words will be dynamically inserted here -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="text-center mb-4">Corporate Lingo Learning Game</h1>
+        <p class="lead text-center mb-4">Master Your Corporate Lingo Today!</p>
+        <p class="text-center mb-5">Welcome to the ultimate game to enhance your corporate vocabulary skills!</p>
+
+        <div class="progress mb-4">
+            <div id="progress" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
-        <div id="definitionsRow" class="row">
-          <!-- Definitions will be dynamically inserted here -->
+
+        <div class="game-area mb-4">
+            <div id="wordsRow" class="row g-3 mb-3"></div>
+            <div id="definitionsRow" class="row g-3"></div>
         </div>
-      </div>
-      <button id="resetButton">Reset Cards</button>
+
+        <button id="resetButton" class="btn btn-primary btn-lg d-block mx-auto">Reset Cards</button>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
-  </body>
+</body>
 </html>
