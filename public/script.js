@@ -16,11 +16,14 @@ function shuffle(array) {
 // Function to create a card element
 function createCard(content, type, id) {
   const card = document.createElement("div");
-  card.className = "card";
-  card.textContent = content;
-  card.dataset.type = type;
-  card.dataset.id = id;
-  card.addEventListener("click", handleCardClick);
+  card.className = "col-6 col-md-4 col-lg-3 mb-3";
+  const cardInner = document.createElement("div");
+  cardInner.className = "card h-100 d-flex align-items-center justify-content-center";
+  cardInner.textContent = content;
+  cardInner.dataset.type = type;
+  cardInner.dataset.id = id;
+  cardInner.addEventListener("click", handleCardClick);
+  card.appendChild(cardInner);
   return card;
 }
 
