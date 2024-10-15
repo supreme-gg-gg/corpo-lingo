@@ -1,35 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Corporate Lingo Learning Game</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
     <div class="container">
-      <h1>Master Your Corporate Lingo Today!</h1>
-      <p style="text-align: center">
-        Welcome to the ultimate game to enhance your corporate vocabulary
-        skills! Visit our <a href="competition.html">competition page</a>.
-      </p>
-      <div class="progress-container">
-        <div class="progress-bar" id="progress"></div>
-      </div>
-      <div class="game-area">
-        <div id="wordsRow" class="row">
-          <!-- Words will be dynamically inserted here -->
+        <h1>Corporate Lingo Learning Game</h1>
+        <h2>Master Your Corporate Lingo Today!</h2>
+        <p>Welcome to the ultimate game to enhance your corporate vocabulary skills!</p>
+        
+        <div class="text-center mb-4">
+            <a href="compete.html" class="btn btn-primary btn-lg">Compete with Others!</a>
         </div>
-        <div id="definitionsRow" class="row">
-          <!-- Definitions will be dynamically inserted here -->
+
+        <div class="game-area">
+            <div class="row" id="wordsRow"></div>
+            <div class="row" id="definitionsRow"></div>
         </div>
-      </div>
-      <button id="resetButton">Reset Cards</button>
+
+        <div class="progress-container">
+            <div id="progress" class="progress-bar"></div>
+        </div>
+
+        <button id="resetButton">Reset Cards</button>
     </div>
+
     <script src="script.js"></script>
-  </body>
+</body>
 </html>

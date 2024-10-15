@@ -65,7 +65,7 @@ p {
   margin-bottom: 1rem;
 }
 
-.card {
+.card, .word-option {
   background-color: #fff;
   border: none;
   border-radius: 12px;
@@ -85,7 +85,7 @@ p {
   overflow: hidden;
 }
 
-.card::before {
+.card::before, .word-option::before {
   content: "";
   position: absolute;
   top: -2px;
@@ -99,12 +99,12 @@ p {
   transition: opacity 0.3s ease;
 }
 
-.card:hover {
+.card:hover, .word-option:hover {
   transform: translateY(-5px) scale(1.02);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.card:hover::before {
+.card:hover::before, .word-option:hover::before {
   opacity: 1;
 }
 
@@ -126,23 +126,10 @@ p {
 }
 
 @keyframes shake {
-  10%,
-  90% {
-    transform: translate3d(-1px, 0, 0);
-  }
-  20%,
-  80% {
-    transform: translate3d(2px, 0, 0);
-  }
-  30%,
-  50%,
-  70% {
-    transform: translate3d(-4px, 0, 0);
-  }
-  40%,
-  60% {
-    transform: translate3d(4px, 0, 0);
-  }
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
 }
 
 #resetButton,
@@ -174,7 +161,7 @@ p {
     padding: 1rem;
   }
 
-  .card {
+  .card, .word-option {
     width: calc(33.33% - 1rem);
     height: 70px;
     font-size: 0.8rem;
@@ -201,4 +188,76 @@ p {
   height: 100%;
   background-color: #3498db;
   transition: width 0.5s ease-in-out;
+}
+
+/* New styles for the competition page */
+
+.definition-box {
+  background-color: #f8f9fa;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.word-option {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.word-option:hover {
+  background-color: #e9ecef;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.player-progress {
+  height: 30px;
+  margin-bottom: 20px;
+}
+
+/* Raise-shadow animation for word options */
+@keyframes raise-shadow {
+  0% {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.word-option:hover {
+  animation: raise-shadow 0.3s ease-out forwards;
+}
+
+/* Correct answer styles */
+.correct-answer {
+  background-color: #2ecc71;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.correct-answer.definition-box,
+.correct-answer.word-option {
+  background-color: #2ecc71;
+  color: white;
+}
+
+/* Incorrect answer styles */
+.incorrect-answer {
+  background-color: #e74c3c;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.incorrect-answer.definition-box,
+.incorrect-answer.word-option {
+  background-color: #e74c3c;
+  color: white;
 }

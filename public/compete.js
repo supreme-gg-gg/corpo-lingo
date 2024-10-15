@@ -40,6 +40,7 @@ socket.on("gameStart", (data) => {
   fetchCards(); // Fetch cards when the game starts
   document.getElementById("waiting-screen").style.display = "none";
   document.getElementById("game-screen").style.display = "block";
+  updateScores(0, 0); // Initialize scores
 });
 
 socket.on("newWord", (data) => {
@@ -49,10 +50,11 @@ socket.on("newWord", (data) => {
   data.options.forEach((option) => {
     const button = document.createElement("button");
     button.textContent = option;
+    button.classList.add("word-option", "col-12", "col-md-6", "col-lg-3");
     button.addEventListener("click", () => submitAnswer(option));
     optionsContainer.appendChild(button);
   });
-  document.getElementById("score").textContent = `Score: ${data.score}`;
+  updateScores(data.score, data.opponentScore);
   startTimer();
 });
 
@@ -64,6 +66,19 @@ socket.on("answerResult", (data) => {
     resultElement.textContent = "";
   }, 1000);
 });
+
+function updateScores(playerScore, opponentScore) {
+  const playerProgress = document.getElementById("player-progress");
+  const opponentProgress = document.getElementById("opponent-progress");
+  
+  playerProgress.style.width = `${playerScore}%`;
+  playerProgress.setAttribute("aria-valuenow", playerScore);
+  
+  opponentProgress.style.width = `${opponentScore}%`;
+  opponentProgress.setAttribute("aria-valuenow", opponentScore);
+  
+  document.getElementById("score").textContent = `Your Score: ${playerScore}`;
+}
 
 socket.on("gameEnd", (data) => {
   document.getElementById("game-screen").style.display = "none";
