@@ -119,6 +119,8 @@ p {
 }
 
 .wrong {
+  background-color: #e74c3c;
+  color: white;
   animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
@@ -193,7 +195,6 @@ p {
 /* New styles for the competition page */
 
 .definition-box {
-  background-color: #f8f9fa;
   border-radius: 15px;
   padding: 20px;
   margin-bottom: 20px;
@@ -202,7 +203,6 @@ p {
 }
 
 .word-option {
-  background-color: #ffffff;
   border: 1px solid #dee2e6;
   border-radius: 10px;
   padding: 15px;
@@ -260,4 +260,9 @@ p {
 .incorrect-answer.word-option {
   background-color: #e74c3c;
   color: white;
+}
+
+.default {
+  background-color: #f8f9fa;
+  color: #2c3e50;
 }

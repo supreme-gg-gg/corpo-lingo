@@ -79,14 +79,17 @@ io.on("connection", (socket) => {
     const correct = answer === game.cards[game.currentWord].word;
     game.scores[playerIndex] += correct ? 1 : 0;
 
-    socket.emit("answerResult", { correct, score: game.scores[playerIndex] });
+    socket.emit("answerResult", { correct, selectedWord: answer, correctWord: game.cards[game.currentWord].word, score: game.scores[playerIndex] });
 
-    if (game.currentWord < 19) {
-      game.currentWord++;
-      sendNextWord(gameId);
-    } else {
-      endGame(gameId);
-    }
+    // Wait for a moment before moving to the next question
+    setTimeout(() => {
+      if (game.currentWord < 19) {
+        game.currentWord++;
+        sendNextWord(gameId);
+      } else {
+        endGame(gameId);
+      }
+    }, 1300); // 1 second + 0.3 seconds of animation
   });
 
   socket.on("disconnect", () => {
