@@ -134,7 +134,7 @@ p {
   40%, 60% { transform: translate3d(4px, 0, 0); }
 }
 
-#competeButton,
+#start-prompt-button,
 #resetButton,
 #homeButton {
   display: block;
@@ -153,11 +153,30 @@ p {
 }
 
 #competeButton:hover,
+#promptButton:hover,
+#start-prompt-button:hover,
 #resetButton:hover,
 #homeButton:hover {
   background-color: #2980b9;
   box-shadow: 0 6px 8px rgba(52, 152, 219, 0.4);
   transform: translateY(-2px);
+}
+
+#competeButton,
+#promptButton {
+  width: calc(33.33% - 1rem);
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #3498db;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
 }
 
 @media (max-width: 768px) {
