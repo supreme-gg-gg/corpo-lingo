@@ -11,7 +11,7 @@ Ever felt lost in a sea of corporate jargon? Fear not! This project will turn yo
 1. **Clone the repo:**
 
    ```sh
-   git clone https://github.com/yourusername/corpo-lingo.git
+   git clone https://github.com/surpeme-gg-gg/corpo-lingo.git
    cd corpo-lingo
    ```
 
