@@ -266,3 +266,8 @@ p {
   background-color: #f8f9fa;
   color: #2c3e50;
 }
+
+.disabled {
+  pointer-events: none; /* No mouse interaction */
+  opacity: 0.5; /* Optional: visually indicate the element is disabled */
+}

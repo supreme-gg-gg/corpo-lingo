@@ -79,17 +79,28 @@ io.on("connection", (socket) => {
     const correct = answer === game.cards[game.currentWord].word;
     game.scores[playerIndex] += correct ? 1 : 0;
 
-    socket.emit("answerResult", { correct, selectedWord: answer, correctWord: game.cards[game.currentWord].word, score: game.scores[playerIndex] });
+    game.players.forEach((player, index) => {
+      player.emit("answerResult", {
+          correct,
+          selectedWord: answer,
+          correctWord: game.cards[game.currentWord].word,
+          score: game.scores[playerIndex],
+          currentPlayer: playerIndex,
+      });
+    });
 
-    // Wait for a moment before moving to the next question
-    setTimeout(() => {
-      if (game.currentWord < 19) {
-        game.currentWord++;
-        sendNextWord(gameId);
-      } else {
-        endGame(gameId);
-      }
-    }, 1300); // 1 second + 0.3 seconds of animation
+    // Move to the next word if the answer was correct
+    if (correct) {
+      // Wait for a moment before moving to the next question
+      setTimeout(() => {
+        if (game.currentWord < game.cards.length - 1) {
+          game.currentWord++;
+          sendNextWord(gameId);
+        } else {
+          endGame(gameId);
+        }
+      }, 1300); // 1 second + 0.3 seconds of animation
+    }
   });
 
   socket.on("disconnect", () => {
@@ -112,10 +123,14 @@ function sendNextWord(gameId) {
   const options = getRandomOptions(currentWord.word, cards);
 
   game.players.forEach((player, index) => {
+
+    const opponentIndex = index === 0 ? 1 : 0;
+
     player.emit("newWord", {
       definition: currentWord.definition,
       options,
       score: game.scores[index],
+      opponentScore: game.scores[opponentIndex]
     });
   });
 }
