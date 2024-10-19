@@ -135,6 +135,7 @@ p {
 }
 
 #start-prompt-button,
+#nextButton,
 #resetButton,
 #homeButton {
   display: block;
@@ -155,6 +156,7 @@ p {
 #competeButton:hover,
 #promptButton:hover,
 #start-prompt-button:hover,
+#nextButton:hover,
 #resetButton:hover,
 #homeButton:hover {
   background-color: #2980b9;
