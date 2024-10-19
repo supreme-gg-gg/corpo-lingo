@@ -70,8 +70,8 @@ socket.on("answerResult", (data) => {
   const correctWordOption = Array.from(document.querySelectorAll('.word-option')).find(option => option.textContent === data.correctWord);
   const selectedWordOption = Array.from(document.querySelectorAll('.word-option')).find(option => option.textContent === data.selectedWord);
 
-  definitionBox.classList.remove("default");
-  selectedWordOption.classList.remove("default");
+  definitionBox.classList.remove("option-default");
+  selectedWordOption.classList.remove("option-default");
   
   if (data.correct) {
     definitionBox.classList.add("matched");
@@ -87,7 +87,7 @@ socket.on("answerResult", (data) => {
     definitionBox.classList.remove("matched", "wrong");
     document.querySelectorAll('.word-option').forEach(option => {
       option.classList.remove("selected", "matched", "wrong");
-      option.classList.add("default");
+      option.classList.add("option-default");
       option.style.pointerEvents = 'auto';
     });
   }, 1000);
