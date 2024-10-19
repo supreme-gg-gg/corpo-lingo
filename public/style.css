@@ -134,6 +134,7 @@ p {
   40%, 60% { transform: translate3d(4px, 0, 0); }
 }
 
+#competeButton,
 #resetButton,
 #homeButton {
   display: block;
@@ -151,6 +152,7 @@ p {
   box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
 }
 
+#competeButton:hover,
 #resetButton:hover,
 #homeButton:hover {
   background-color: #2980b9;
@@ -181,6 +183,7 @@ p {
   height: 20px;
   background-color: #e0e0e0;
   border-radius: 10px;
+  margin-top: 2rem;
   margin-bottom: 2rem;
   overflow: hidden;
 }
@@ -193,6 +196,16 @@ p {
 }
 
 /* New styles for the competition page */
+
+#compete-description {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+#waiting-message {
+  margin-bottom: 14rem;
+}
 
 .definition-box {
   border-radius: 15px;
@@ -215,6 +228,12 @@ p {
   background-color: #e9ecef;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.progress-label {
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  text-align: justify;
 }
 
 .player-progress {
@@ -262,7 +281,7 @@ p {
   color: white;
 }
 
-.default {
+.option-default {
   background-color: #f8f9fa;
   color: #2c3e50;
 }

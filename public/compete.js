@@ -71,8 +71,8 @@ socket.on("answerResult", (data) => {
   const correctWordOption = Array.from(document.querySelectorAll('.word-option')).find(option => option.textContent === data.correctWord);
   const selectedWordOption = Array.from(document.querySelectorAll('.word-option')).find(option => option.textContent === data.selectedWord);
 
-  definitionBox.classList.remove("default");
-  selectedWordOption.classList.remove("default");
+  definitionBox.classList.remove("option-default");
+  selectedWordOption.classList.remove("option-default");
   
   if (data.correct) {
     definitionBox.classList.add("matched");
