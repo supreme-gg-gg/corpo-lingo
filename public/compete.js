@@ -59,19 +59,20 @@ socket.on("newWord", (data) => {
 });
 
 socket.on("answerResult", (data) => {
-  const resultElement = document.getElementById("result");
-  resultElement.textContent = data.correct ? "Correct!" : "Incorrect";
-  resultElement.style.color = data.correct ? "green" : "red";
   
   // Disable all word options temporarily
-  document.querySelectorAll('.word-option').forEach(option => option.style.pointerEvents = 'none');
+  // document.querySelectorAll('.word-option').forEach(option => option.style.pointerEvents = 'none');
 
-  const definitionBox = document.querySelector('.definition-box');
+  document.querySelectorAll('.word-option').forEach(option => {
+    option.classList.add("disabled");
+  });
+
+  const definitionBox = document.querySelector('.definition-box')
   const correctWordOption = Array.from(document.querySelectorAll('.word-option')).find(option => option.textContent === data.correctWord);
   const selectedWordOption = Array.from(document.querySelectorAll('.word-option')).find(option => option.textContent === data.selectedWord);
 
-  definitionBox.classList.remove("default");
-  selectedWordOption.classList.remove("default");
+  definitionBox.classList.remove("option-default");
+  selectedWordOption.classList.remove("option-default");
   
   if (data.correct) {
     definitionBox.classList.add("matched");
@@ -83,10 +84,9 @@ socket.on("answerResult", (data) => {
 
   // Wait for a moment before moving to the next question
   setTimeout(() => {
-    resultElement.textContent = "";
     definitionBox.classList.remove("matched", "wrong");
     document.querySelectorAll('.word-option').forEach(option => {
-      option.classList.remove("selected", "matched", "wrong");
+      option.classList.remove("selected", "matched", "wrong", "disabled");
       option.classList.add("default");
       option.style.pointerEvents = 'auto';
     });
