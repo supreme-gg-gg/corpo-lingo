@@ -4,6 +4,9 @@ const socketIo = require("socket.io");
 const http = require("http");
 const path = require("path");
 const bodyParser = require('body-parser');
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const genAI = new GoogleGenerativeAI("AIzaSyB02a10k9TFX-HTMT-8YhdxGtgoE-BYCNY");
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -67,34 +70,28 @@ app.post('/store-selection', (req, res) => {
 });
 
 require('dotenv').config();
-const apiToken = process.env.HUGGING_FACE_API_TOKEN;
-const API_URL = "https://api-inference.huggingface.co/models/gpt2"; // Replace with the desired model
+const apiToken = process.env.GOOGLE_API_KEY;
+//const API_URL = "https://api-inference.huggingface.co/models/gpt2"; // Replace with the desired model
 
 app.get("/get-prompt", async (req, res) => {
   const prompt = `
-        Generate a work scenario in the ${selections} industry using corporate lingo. 
+        Generate a fill-in-the-blank question about corporate lingo and buzzwords in a ${selections} industry work scenario. 
         Include a sentence with one word replaced by a blank (represented as "____"). 
         Provide one correct answer and three incorrect answer choices. 
+        Do not use markdown formatting in the output. 
         Format your response as follows:
-        
-        Scenario: "In our team meeting, we need to focus on ____ to enhance our productivity.'"
-        Correct Answer: [correct answer]
-        Incorrect Choices: [incorrect answer 1], [incorrect answer 2], [incorrect answer 3]
+        {
+        "Scenario": "... ____ ...",
+        "CorrectAnswer": "correct answer",
+        "IncorrectChoices": ["incorrect answer 1", "incorrect answer 2", "incorrect answer 3"]
+        }
     `;
     
   try {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${apiToken}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ inputs: prompt })
-    });
-
-    const result = await response.json();
-    if (response.ok) {
-      const generatedText = result[0].generated_text; // Modify based on the API response structure
+    const result = await model.generateContent(prompt);
+    if (true) {
+      const generatedText = result.response.text();
+    console.log(generatedText);
       const { scenario, correctAnswer, incorrectChoices } = parseOutput(generatedText);
       res.json({ scenario, correctAnswer, incorrectChoices });
     } else {
@@ -107,15 +104,8 @@ app.get("/get-prompt", async (req, res) => {
 });
 
 function parseOutput(output) {
-  const scenarioMatch = output.match(/Scenario:\s*"(.+?)"/);
-  const correctAnswerMatch = output.match(/Correct Answer:\s*(.+?)/);
-  const incorrectChoicesMatch = output.match(/Incorrect Choices:\s*(.+)/);
-
-  return {
-    scenario: scenarioMatch ? scenarioMatch[1] : null,
-    correctAnswer: correctAnswerMatch ? correctAnswerMatch[1] : null,
-    incorrectChoices: incorrectChoicesMatch ? incorrectChoicesMatch[1].split(', ') : []
-  };
+    const obj = JSON.parse(output);
+    return { scenario: obj.Scenario, correctAnswer: obj.CorrectAnswer, incorrectChoices: obj.IncorrectChoices };
 }
 
 /*
