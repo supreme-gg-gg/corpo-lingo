@@ -35,7 +35,6 @@ function getPrompt() {
     .then(response => response.json())
     .then(data => {
       populateBoard(data);
-      //console.log(scenario, correctAnswer, incorrectChoices);
     })
     .catch(error => {
       console.error("Error fetching selection data:", error);
@@ -90,13 +89,9 @@ function populateBoard(data) {
 function submitAnswer(selectedOption) {
   if (!promptCompleted) {
     // Disable all word options temporarily
-    // document.querySelectorAll('.word-option').forEach(option => option.style.pointerEvents = 'none');
+    document.querySelectorAll('.word-option').forEach(option => option.style.pointerEvents = 'none');
 
-    document.querySelectorAll('.word-option').forEach(option => {
-      option.classList.add("disabled");
-    });
-
-    const definitionBox = document.querySelector('.definition-box')
+    const definitionBox = document.querySelector('.definition-box');
     const selectedWordOption = Array.from(document.querySelectorAll('.word-option')).find(option => option.textContent === selectedOption);
 
     definitionBox.classList.remove("option-default");
@@ -117,10 +112,10 @@ function submitAnswer(selectedOption) {
 
     // Wait for a moment for animation
     setTimeout(() => {
-      definitionBox.classList.remove("matched", "wrong");
+      definitionBox.classList.remove("wrong");
       document.querySelectorAll('.word-option').forEach(option => {
-        option.classList.remove("selected", "matched", "wrong", "disabled");
-        option.classList.add("default");
+        option.classList.remove("selected", "wrong");
+        if (!correct) { option.classList.add("default"); }
         option.style.pointerEvents = 'auto';
       });
     }, 1000);
@@ -129,6 +124,14 @@ function submitAnswer(selectedOption) {
 
 document.getElementById("nextButton").addEventListener("click", () => {
   if (promptCompleted) {
+    document.getElementById("nextButton").classList.add("disabled");
+    // reset graphics
+    document.querySelector('.definition-box').classList.remove("matched", "wrong");
+    document.querySelectorAll('.word-option').forEach(option => {
+      option.classList.remove("selected", "matched", "wrong");
+      option.classList.add("default");
+    });
+    
     getPrompt();
   }
 });
