@@ -26,4 +26,15 @@ Ever felt lost in a sea of corporate jargon? Fear not! This project will turn yo
    node server.js
    ```
 
-> Get ready to buzzword your way to the top!
+> NOTE: The LLM feature currently uses our own API key, so please do not exhaust the calls.
+
+## Features
+
+1. **Learn Corporate Lingo:**
+   Match words with their definitions to build your corporate vocabulary. This feature helps you understand and remember key terms used in the corporate world.
+
+2. **Real-Time Competition:**
+   Compete with other players in real-time to see who can match definitions the fastest. This adds a fun and competitive element to your learning process.
+
+3. **Practice in Real-Life Scenarios:**
+   Apply the words you've learned in simulated real-life corporate scenarios. This feature helps you practice and reinforce your new vocabulary in a practical context.
