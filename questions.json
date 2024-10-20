@@ -1,0 +1,44 @@
+[
+  {
+    "sentence": "In our team meeting, we need to focus on ____ to enhance our productivity.",
+    "correctAnswer": "synergy",
+    "incorrectChoices": ["budget", "attendance", "office"],
+    "labels": ["finance", "tech"]
+  },
+  {
+    "sentence": "To get the project approved, we'll need to complete a detailed ____ analysis.",
+    "correctAnswer": "cost-benefit",
+    "incorrectChoices": ["teamwork", "marketing", "engagement"],
+    "labels": ["finance", "marketing"]
+  },
+  {
+    "sentence": "The new strategy aims to disrupt the market by focusing on ____ innovation.",
+    "correctAnswer": "disruptive",
+    "incorrectChoices": ["financial", "routine", "incremental"],
+    "labels": ["tech", "marketing"]
+  },
+  {
+    "sentence": "Our goal this quarter is to improve our ____ across all departments.",
+    "correctAnswer": "KPIs",
+    "incorrectChoices": ["deadlines", "attendance", "collaboration"],
+    "labels": ["finance", "education"]
+  },
+  {
+    "sentence": "The team will need to focus on increasing our ____ to remain competitive in the market.",
+    "correctAnswer": "ROI",
+    "incorrectChoices": ["HR", "meetings", "attendance"],
+    "labels": ["finance", "tech", "marketing"]
+  },
+  {
+    "sentence": "We will use ____ to ensure that the students remain engaged in the learning process.",
+    "correctAnswer": "active learning",
+    "incorrectChoices": ["passive learning", "synergy", "capitalization"],
+    "labels": ["education", "tech"]
+  },
+  {
+    "sentence": "To stay ahead of the competition, we need to improve our ____ in the digital space.",
+    "correctAnswer": "digital footprint",
+    "incorrectChoices": ["budget", "attendance", "profit margins"],
+    "labels": ["tech", "marketing"]
+  }
+]

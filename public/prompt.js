@@ -24,13 +24,15 @@ document.getElementById("start-prompt-button").addEventListener("click", () => {
   if (selectedIndustry != null) {
     document.getElementById("selection-screen").style.display = "none";
     document.getElementById("game-screen").style.display = "block";
-    fetch("/store-selection", {
+    
+    /*
+    fetch(`/store-selection?selection={selectedIndustry }`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ selections: selectedIndustry })
-    })
+    })*/
 
     getPrompt();
   };
@@ -38,12 +40,10 @@ document.getElementById("start-prompt-button").addEventListener("click", () => {
 
 // creates scenario, correctAnswer, incorrectChoices that are used to populate the screen
 function getPrompt() {
-  fetch("/get-prompt")
+  fetch(`/get-question?selection=${selectedIndustry}`)
     .then(response => response.json())
     .then(data => {
-      const { scenario, correctAnswer, incorrectChoices } = data;
       populateBoard(data);
-      //console.log(scenario, correctAnswer, incorrectChoices);
     })
     .catch(error => {
       console.error("Error fetching selection data:", error);
@@ -77,11 +77,11 @@ document.getElementById("tech-ind-button").addEventListener("click", () => {
 function populateBoard(data) {
   promptCompleted = false;
   document.getElementById("nextButton").classList.add("disabled");
-  const { scenario, correctAnswer, incorrectChoices } = data;
+  const { sentence, correctAnswer, incorrectChoices } = data;
   const options = incorrectChoices;
   options.push(correctAnswer);
   shuffle(options);
-  document.getElementById("scenario").textContent = scenario;
+  document.getElementById("scenario").textContent = sentence;
   correctWord = correctAnswer;
   const optionsContainer = document.getElementById("options");
   optionsContainer.innerHTML = "";

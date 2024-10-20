@@ -49,7 +49,46 @@ app.get("/cards", (req, res) => {
   } catch (parseErr) {
     res.status(500).send("Error parsing JSON");
   }
-})
+});
+
+// Load questions.json and parse it as JSON
+let questions = [];
+
+fs.readFile('./questions.json', 'utf8', (err, data) => {
+  if (err) {
+    console.error("Error loading questions.json", err);
+    return;
+  }
+  questions = JSON.parse(data);
+  console.log("Questions loaded successfully");
+});
+
+// GET route to return a random question based on label selection
+app.get('/get-question', (req, res) => {
+  const { selection } = req.query; // Expecting a query param like ?selection=tech
+
+  if (questions.length > 0) {
+
+    let filteredQuestions = questions
+
+    if (selection) {
+      // Filter questions based on label matching the user selection
+      filteredQuestions = questions.filter(question => question.labels.includes(selection.toLowerCase()));
+    }
+    
+    if (filteredQuestions.length > 0) {
+      // Select a random question from the filtered list
+      const randomQuestion = filteredQuestions[Math.floor(Math.random() * filteredQuestions.length)];
+      res.json(randomQuestion);
+    } else {
+      res.status(404).send("No questions available for the selected label");
+    }
+  } else {
+    res.status(500).send("No questions available");
+  }
+});
+
+// NOTE: The below AI functions are currently being developed
 
 var selections = ""
 
@@ -68,94 +107,100 @@ app.post('/store-selection', (req, res) => {
 
 require('dotenv').config();
 const apiToken = process.env.HUGGING_FACE_API_TOKEN;
-const API_URL = "https://api-inference.huggingface.co/models/gpt2"; // Replace with the desired model
+const { HfInference } = require('@huggingface/inference')
+const hf = new HfInference(apiToken)
+const API_URL = "https://api-inference.huggingface.co/models/meta-llama/Llama-3.2-1B"; // Replace with the desired model
 
-app.get("/get-prompt", async (req, res) => {
-  const prompt = `
-        Generate a work scenario in the ${selections} industry using corporate lingo. 
-        Include a sentence with one word replaced by a blank (represented as "____"). 
-        Provide one correct answer and three incorrect answer choices. 
-        Format your response as follows:
-        
-        Scenario: "In our team meeting, we need to focus on ____ to enhance our productivity.'"
-        Correct Answer: [correct answer]
-        Incorrect Choices: [incorrect answer 1], [incorrect answer 2], [incorrect answer 3]
-    `;
-    
+app.get('/generate-sentence', async (req, res) => {
+  const prompt = "Generate a sentence that uses corporate lingo in the workplace.";
+  
   try {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${apiToken}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ inputs: prompt })
+    const response = await hf.textGeneration({
+      model: 'gpt2',  // Replace with a better model like GPT-3 if available
+      inputs: prompt,
+      parameters: { max_length: 50 } // Customize max length if needed
     });
 
-    const result = await response.json();
-    if (response.ok) {
-      const generatedText = result[0].generated_text; // Modify based on the API response structure
-      const { scenario, correctAnswer, incorrectChoices } = parseOutput(generatedText);
-      res.json({ scenario, correctAnswer, incorrectChoices });
-    } else {
-      throw new Error(result.error || "Error generating text");
-    }
+    console.log(response);
+    
+    // Extract the generated text from the response
+    const generatedText = response.generated_text;
+
+    res.json({
+      generatedText
+    });
   } catch (error) {
-    console.error("Error generating prompt:", error);
-    res.status(500).send("Error generating prompt");
+    console.error("Error generating sentence:", error);
+    res.status(500).send("Error generating sentence");
   }
 });
 
+app.get("/get-prompt", async (req, res) => {
+  var prompt = `
+    Generate a work scenario in the technology industry using corporate lingo. 
+    Follow these steps:
+    1. Write a scenario sentence with one key word replaced by "____".
+    2. Provide the correct answer (the word that fits in the blank).
+    3. Provide three incorrect but plausible answer choices.
+
+    Use this exact format:
+    Scenario: [Full sentence with ____]
+    Correct Answer: [Word that fits in the blank]
+    Incorrect Choices: [Wrong word 1], [Wrong word 2], [Wrong word 3]
+  `;
+
+  prompt = "Give me an example of a sentence using corporate lingo in workspace in technology sector"
+
+  const fetchWithRetry = async (attempts = 3) => {
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiToken}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ inputs: prompt })
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        const generatedText = result[0].generated_text; // Modify based on the API response structure
+        console.log(generatedText);
+        const { scenario, correctAnswer, incorrectChoices } = parseOutput(generatedText);
+        res.json({ scenario, correctAnswer, incorrectChoices });
+      } else if (result.error && result.error.includes('currently loading')) {
+        if (attempts > 0) {
+          const waitTime = result.estimated_time || 60;  // Default to 60 seconds if no estimate is provided
+          console.log(`Model is loading, retrying in ${waitTime} seconds...`);
+          setTimeout(() => fetchWithRetry(attempts - 1), waitTime * 1000);  // Wait and retry
+        } else {
+          res.status(500).send("Model still loading after multiple attempts");
+        }
+      } else {
+        throw new Error(result.error || "Error generating text");
+      }
+    } catch (error) {
+      console.error("Error generating prompt:", error);
+      res.status(500).send("Error generating prompt");
+    }
+  };
+
+  fetchWithRetry(); // Initiate the first fetch attempt
+});
+
 function parseOutput(output) {
+  // Basic parsing for a structured format
   const scenarioMatch = output.match(/Scenario:\s*"(.+?)"/);
   const correctAnswerMatch = output.match(/Correct Answer:\s*(.+?)/);
   const incorrectChoicesMatch = output.match(/Incorrect Choices:\s*(.+)/);
 
   return {
-    scenario: scenarioMatch ? scenarioMatch[1] : null,
-    correctAnswer: correctAnswerMatch ? correctAnswerMatch[1] : null,
+    scenario: scenarioMatch ? scenarioMatch[1] : "No scenario found",
+    correctAnswer: correctAnswerMatch ? correctAnswerMatch[1] : "No correct answer",
     incorrectChoices: incorrectChoicesMatch ? incorrectChoicesMatch[1].split(', ') : []
   };
 }
-
-/*
-app.post('/get-prompt', async (req, res) => {
-
-    const prompt = `
-        Generate a work scenario in the ${selectionsStorage} industry using corporate lingo. 
-        Include a sentence with one word replaced by a blank (represented as "____"). 
-        Provide one correct answer and three incorrect answer choices. 
-        Format your response as follows:
-        
-        Scenario: "Here is the sentence with a blank: 'In our team meeting, we need to focus on ____ to enhance our productivity.'"
-        Correct Answer: [correct answer]
-        Incorrect Choices: [incorrect answer 1], [incorrect answer 2], [incorrect answer 3]
-    `;
-  
-    // Tokenize the input and generate a response
-    const inputIds = tokenizer.encode(prompt, { return_tensors: 'pt' });
-    const output = await model.generate(inputIds, { max_length: 50 }); // Adjust max_length as needed
-
-    const generatedText = tokenizer.decode(output[0], { skip_special_tokens: true });
-
-    // Process the generated text to create the response
-    const [sentenceWithBlank, correctAnswer, wrongAnswers] = parseOutput(generatedText);
-
-    res.json({ sentence: sentenceWithBlank, correct: correctAnswer, options: wrongAnswers });
-});
-
-function parseOutput(output) {
-    const scenarioMatch = output.match(/Scenario:\s*"(.+?)"/);
-    const correctAnswerMatch = output.match(/Correct Answer:\s*(.+?)/);
-    const incorrectChoicesMatch = output.match(/Incorrect Choices:\s*(.+)/);
-
-    return {
-        scenario: scenarioMatch ? scenarioMatch[1] : null,
-        correctAnswer: correctAnswerMatch ? correctAnswerMatch[1] : null,
-        incorrectChoices: incorrectChoicesMatch ? incorrectChoicesMatch[1].split(', ') : []
-    };
-}
-*/
 
 const waitingPlayers = [];
 const activeGames = new Map();
