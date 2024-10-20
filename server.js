@@ -20,14 +20,6 @@ const io = socketIo(server);
 app.use(bodyParser.json()); // Parse JSON bodies
 app.use(express.static(path.join(__dirname, "public")));
 
-/*
-const { pipeline } = require('stream');
-const { Transformers, AutoModelForCausalLM, AutoTokenizer } = require('transformers');
-const modelName = "gpt2"; // Replace with your chosen model
-const tokenizer = AutoTokenizer.fromPretrained(modelName);
-const model = AutoModelForCausalLM.fromPretrained(modelName);
-*/
-
 // Variable to hold the card data
 let cards = [];
 
@@ -89,45 +81,6 @@ function parseOutput(output) {
     const obj = JSON.parse(output);
     return { scenario: obj.Scenario, correctAnswer: obj.CorrectAnswer, incorrectChoices: obj.IncorrectChoices };
 }
-
-/*
-app.post('/get-prompt', async (req, res) => {
-
-    const prompt = `
-        Generate a work scenario in the ${selectionsStorage} industry using corporate lingo. 
-        Include a sentence with one word replaced by a blank (represented as "____"). 
-        Provide one correct answer and three incorrect answer choices. 
-        Format your response as follows:
-        
-        Scenario: "Here is the sentence with a blank: 'In our team meeting, we need to focus on ____ to enhance our productivity.'"
-        Correct Answer: [correct answer]
-        Incorrect Choices: [incorrect answer 1], [incorrect answer 2], [incorrect answer 3]
-    `;
-  
-    // Tokenize the input and generate a response
-    const inputIds = tokenizer.encode(prompt, { return_tensors: 'pt' });
-    const output = await model.generate(inputIds, { max_length: 50 }); // Adjust max_length as needed
-
-    const generatedText = tokenizer.decode(output[0], { skip_special_tokens: true });
-
-    // Process the generated text to create the response
-    const [sentenceWithBlank, correctAnswer, wrongAnswers] = parseOutput(generatedText);
-
-    res.json({ sentence: sentenceWithBlank, correct: correctAnswer, options: wrongAnswers });
-});
-
-function parseOutput(output) {
-    const scenarioMatch = output.match(/Scenario:\s*"(.+?)"/);
-    const correctAnswerMatch = output.match(/Correct Answer:\s*(.+?)/);
-    const incorrectChoicesMatch = output.match(/Incorrect Choices:\s*(.+)/);
-
-    return {
-        scenario: scenarioMatch ? scenarioMatch[1] : null,
-        correctAnswer: correctAnswerMatch ? correctAnswerMatch[1] : null,
-        incorrectChoices: incorrectChoicesMatch ? incorrectChoicesMatch[1].split(', ') : []
-    };
-}
-*/
 
 const waitingPlayers = [];
 const activeGames = new Map();
