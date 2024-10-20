@@ -4,8 +4,11 @@ const socketIo = require("socket.io");
 const http = require("http");
 const path = require("path");
 const bodyParser = require('body-parser');
+
+require('dotenv').config();
+const apiToken = process.env.GOOGLE_API_KEY;
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const genAI = new GoogleGenerativeAI("AIzaSyB02a10k9TFX-HTMT-8YhdxGtgoE-BYCNY");
+const genAI = new GoogleGenerativeAI(apiToken);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 const app = express();
@@ -54,28 +57,12 @@ app.get("/cards", (req, res) => {
   }
 })
 
-var selections = ""
-
-app.post('/store-selection', (req, res) => {
-    const userSelections = req.body; // Access the JSON data
-    
-    // Here, you can directly access the selections array
-    selections = userSelections.selections;
-
-    // Log the selections for debugging
-    console.log('User selections:', selections);
-
-    // Send a response back to the client
-    res.status(200).json({ message: 'Selections stored successfully!' });
-});
-
-require('dotenv').config();
-const apiToken = process.env.GOOGLE_API_KEY;
 //const API_URL = "https://api-inference.huggingface.co/models/gpt2"; // Replace with the desired model
 
 app.get("/get-prompt", async (req, res) => {
+  const {selection} = req.query;
   const prompt = `
-        Generate a fill-in-the-blank question about corporate lingo and buzzwords in a ${selections} industry work scenario. 
+        Generate a fill-in-the-blank question about corporate lingo and buzzwords in a ${selection} industry work scenario. 
         Include a sentence with one word replaced by a blank (represented as "____"). 
         Provide one correct answer and three incorrect answer choices. 
         Do not use markdown formatting in the output. 
@@ -89,14 +76,9 @@ app.get("/get-prompt", async (req, res) => {
     
   try {
     const result = await model.generateContent(prompt);
-    if (true) {
-      const generatedText = result.response.text();
-    console.log(generatedText);
-      const { scenario, correctAnswer, incorrectChoices } = parseOutput(generatedText);
-      res.json({ scenario, correctAnswer, incorrectChoices });
-    } else {
-      throw new Error(result.error || "Error generating text");
-    }
+    const generatedText = result.response.text();
+    const { scenario, correctAnswer, incorrectChoices } = parseOutput(generatedText);
+    res.json({ scenario, correctAnswer, incorrectChoices });
   } catch (error) {
     console.error("Error generating prompt:", error);
     res.status(500).send("Error generating prompt");

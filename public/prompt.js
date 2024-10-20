@@ -24,13 +24,6 @@ document.getElementById("start-prompt-button").addEventListener("click", () => {
   if (selectedIndustry != null) {
     document.getElementById("selection-screen").style.display = "none";
     document.getElementById("game-screen").style.display = "block";
-    fetch("/store-selection", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ selections: selectedIndustry })
-    })
 
     getPrompt();
   };
@@ -38,10 +31,9 @@ document.getElementById("start-prompt-button").addEventListener("click", () => {
 
 // creates scenario, correctAnswer, incorrectChoices that are used to populate the screen
 function getPrompt() {
-  fetch("/get-prompt")
+  fetch(`/get-prompt?selection=${selectedIndustry}`)
     .then(response => response.json())
     .then(data => {
-      const { scenario, correctAnswer, incorrectChoices } = data;
       populateBoard(data);
       //console.log(scenario, correctAnswer, incorrectChoices);
     })
