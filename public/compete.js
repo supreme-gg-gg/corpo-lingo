@@ -61,11 +61,7 @@ socket.on("newWord", (data) => {
 socket.on("answerResult", (data) => {
   
   // Disable all word options temporarily
-  // document.querySelectorAll('.word-option').forEach(option => option.style.pointerEvents = 'none');
-
-  document.querySelectorAll('.word-option').forEach(option => {
-    option.classList.add("disabled");
-  });
+  document.querySelectorAll('.word-option').forEach(option => option.style.pointerEvents = 'none');
 
   const definitionBox = document.querySelector('.definition-box')
   const correctWordOption = Array.from(document.querySelectorAll('.word-option')).find(option => option.textContent === data.correctWord);
@@ -88,7 +84,7 @@ socket.on("answerResult", (data) => {
     document.querySelectorAll('.word-option').forEach(option => {
       option.classList.remove("selected", "matched", "wrong", "disabled");
       option.classList.add("default");
-      option.style.pointerEvents = 'auto';
+      if (!data.correct) { option.style.pointerEvents = 'auto';}
     });
   }, 1000);
 });
@@ -97,11 +93,11 @@ function updateScores(playerScore, opponentScore) {
   const playerProgress = document.getElementById("player-progress");
   const opponentProgress = document.getElementById("opponent-progress");
   
-  playerProgress.style.width = `${playerScore}%`;
-  playerProgress.setAttribute("aria-valuenow", playerScore);
+  playerProgress.style.width = `${playerScore*5}%`;
+  playerProgress.setAttribute("aria-valuenow", playerScore*5);
   
-  opponentProgress.style.width = `${opponentScore}%`;
-  opponentProgress.setAttribute("aria-valuenow", opponentScore);
+  opponentProgress.style.width = `${opponentScore*5}%`;
+  opponentProgress.setAttribute("aria-valuenow", opponentScore*5);
   
   document.getElementById("score").textContent = `Your Score: ${playerScore}`;
 }
