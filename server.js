@@ -106,6 +106,7 @@ app.post('/store-selection', (req, res) => {
 });
 
 require('dotenv').config();
+/*
 const apiToken = process.env.HUGGING_FACE_API_TOKEN;
 const { HfInference } = require('@huggingface/inference')
 const hf = new HfInference(apiToken)
@@ -201,6 +202,7 @@ function parseOutput(output) {
     incorrectChoices: incorrectChoicesMatch ? incorrectChoicesMatch[1].split(', ') : []
   };
 }
+*/
 
 const waitingPlayers = [];
 const activeGames = new Map();
