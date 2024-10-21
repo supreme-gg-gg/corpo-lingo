@@ -6,6 +6,8 @@ Learn Corporate Lingo to get Employed!!!
 
 Ever felt lost in a sea of corporate jargon? Fear not! This project will turn you into a corporate lingo master, ready to impress in any boardroom.
 
+> Try out the online version of Corpo-Lingo at [www.corpo-lingo.glitch.me](https://www.corpo-lingo.glitch.me)!
+
 ## Features
 
 1. **Learn Corporate Lingo:**
@@ -38,7 +40,18 @@ Ever felt lost in a sea of corporate jargon? Fear not! This project will turn yo
    npm install
    ```
 
-3. **Run the app:**
+3. **Set up the environment:**
+   > You may skip this step if you are not planning to use the Practical Scenarios feature.
+   - Get an API key from [Google AI Studio](https://makersuite.google.com/app/apikey).
+   - Create a `.env` file in the root directory of the project.
+   - In the `.env` file, add the following line, replacing `YOUR_API_KEY` with the key you obtained:
+     ```
+     GOOGLE_API_KEY=YOUR_API_KEY
+     ```
+
+4. **Run the app:**
    ```sh
    node server.js
    ```
+
+> Get ready to buzzword your way to the top!
