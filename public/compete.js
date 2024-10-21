@@ -84,7 +84,7 @@ socket.on("answerResult", (data) => {
     document.querySelectorAll('.word-option').forEach(option => {
       option.classList.remove("selected", "matched", "wrong", "disabled");
       option.classList.add("default");
-      option.style.pointerEvents = 'auto';
+      if (!data.correct) { option.style.pointerEvents = 'auto';}
     });
   }, 1000);
 });

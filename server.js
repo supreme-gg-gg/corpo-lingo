@@ -31,7 +31,6 @@ fs.readFile(path.join(__dirname, "cards.json"), "utf8", (err, data) => {
   }
   try {
     cards = JSON.parse(data);
-    console.log("Cards loaded successfully");
   } catch (parseError) {
     console.error("Error parsing JSON:", parseError);
     process.exit(1); // Exit the process if parsing fails
@@ -87,8 +86,6 @@ const activeGames = new Map();
 
 // Socket.IO connection handler
 io.on("connection", (socket) => {
-  console.log("New client connected");
-
   socket.on("joinGame", () => {
     if (waitingPlayers.length > 0) {
       const opponent = waitingPlayers.pop();
