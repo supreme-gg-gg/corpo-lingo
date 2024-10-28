@@ -73,26 +73,30 @@ function handleCardClick(event) {
 // Function to check if selected cards match
 function checkForMatch() {
   if (selectedWord && selectedDefinition) {
+    document.querySelectorAll(".card").forEach(card => card.style.pointerEvents = "none");
     if (selectedWord.dataset.id === selectedDefinition.dataset.id) {
       // Match found
       selectedWord.classList.remove("selected");
       selectedDefinition.classList.remove("selected");
       selectedWord.classList.add("matched");
       selectedDefinition.classList.add("matched");
-      selectedWord = null;
-      selectedDefinition = null;
       matchedPairs++;
       updateProgressBar();
     } else {
       // No match
       selectedWord.classList.add("wrong");
       selectedDefinition.classList.add("wrong");
-      setTimeout(() => {
-        selectedWord.classList.remove("selected", "wrong");
-        selectedDefinition.classList.remove("selected", "wrong");
-        selectedWord = null;
-        selectedDefinition = null;
-      }, 1000);
+    }
+    setTimeout(() => {
+      selectedWord.classList.remove("selected", "wrong");
+      selectedDefinition.classList.remove("selected", "wrong");
+      selectedWord = null;
+      selectedDefinition = null;
+      document.querySelectorAll(".card").forEach(card => card.style.pointerEvents = "auto");
+    }, 1000);
+    if (selectedWord.dataset.id === selectedDefinition.dataset.id) {
+      selectedWord.style.pointerEvents = "none";
+      selectedDefinition.style.pointerEvents = "none";
     }
   }
 }
