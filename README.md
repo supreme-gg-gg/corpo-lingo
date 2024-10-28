@@ -6,7 +6,7 @@ Learn Corporate Lingo to get Employed!!!
 
 Ever felt lost in a sea of corporate jargon? Fear not! This project will turn you into a corporate lingo master, ready to impress in any boardroom.
 
-> Try out the online version of Corpo-Lingo at [www.corpo-lingo.glitch.me](https://www.corpo-lingo.glitch.me)!
+> Try out the online version of Corpo-Lingo at [https://corpo-lingo.onrender.com](https://corpo-lingo.onrender.com)!
 
 ## Features
 
