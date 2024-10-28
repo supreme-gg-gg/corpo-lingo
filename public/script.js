@@ -124,6 +124,7 @@ function endGame() {
   document.getElementById("endgame-area").innerHTML = `
     <h2>Congratulations!</h2>
     <p class="text-center">You've matched all the cards!</p>
+    <p class="text-center">Click Reset Cards to play again, or try a new game mode.</p>
   `;
   startConfetti();
 }
