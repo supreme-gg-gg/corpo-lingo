@@ -112,6 +112,9 @@ socket.on("gameEnd", (data) => {
   document.getElementById(
     "final-score"
   ).textContent = `Your final score: ${data.finalScore}`;
+  if (data.winner === playerIndex) {
+    startConfetti();
+  }
 });
 
 function submitAnswer(answer) {
@@ -140,6 +143,7 @@ function getElapsedTime() {
 }
 
 document.getElementById("play-again").addEventListener("click", () => {
+  stopConfetti();
   document.getElementById("end-screen").style.display = "none";
   document.getElementById("home-screen").style.display = "block";
 });

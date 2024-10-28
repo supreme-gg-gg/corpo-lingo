@@ -73,7 +73,9 @@ function handleCardClick(event) {
 // Function to check if selected cards match
 function checkForMatch() {
   if (selectedWord && selectedDefinition) {
+    // Temporarily disable all cards
     document.querySelectorAll(".card").forEach(card => card.style.pointerEvents = "none");
+    
     if (selectedWord.dataset.id === selectedDefinition.dataset.id) {
       // Match found
       selectedWord.classList.remove("selected");
@@ -92,12 +94,14 @@ function checkForMatch() {
       selectedDefinition.classList.remove("selected", "wrong");
       selectedWord = null;
       selectedDefinition = null;
+      
+      // Reactivate cards
       document.querySelectorAll(".card").forEach(card => card.style.pointerEvents = "auto");
+      if (selectedWord.dataset.id === selectedDefinition.dataset.id) {
+        selectedWord.style.pointerEvents = "none";
+        selectedDefinition.style.pointerEvents = "none";
+      }
     }, 1000);
-    if (selectedWord.dataset.id === selectedDefinition.dataset.id) {
-      selectedWord.style.pointerEvents = "none";
-      selectedDefinition.style.pointerEvents = "none";
-    }
   }
 }
 
@@ -109,13 +113,27 @@ function updateProgressBar() {
 
   if (matchedPairs === totalPairs) {
     setTimeout(() => {
-      alert("Congratulations! You've matched all the cards!");
-    }, 300);
+      endGame();
+    }, 500);
   }
+}
+
+function endGame() {
+  document.getElementById("game-area").style.display = "none";
+  document.getElementById("endgame-area").style.display = "block";
+  document.getElementById("endgame-area").innerHTML = `
+    <h2>Congratulations!</h2>
+    <p class="text-center">You've matched all the cards!</p>
+  `;
+  startConfetti();
 }
 
 // Function to reset the game
 function resetGame() {
+  stopConfetti();
+  document.getElementById("endgame-area").innerHTML = "";
+  document.getElementById("endgame-area").style.display = "none";
+  document.getElementById("game-area").style.display = "block";
   selectedWord = null;
   selectedDefinition = null;
   matchedPairs = 0;
